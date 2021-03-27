@@ -22,10 +22,10 @@ import os
 
 #INPUT Assign a variable for the file to load and the path.
 #file_to_load = 'Resources/election_results.csv'
-file_to_load = "Resources/election_results.csv"
+file_to_load = os.path.join("Resources", "election_results.csv")
 
 #OUTPUT create and assign a save file
-file_to_save = "analysis", "election_analysis.txt"
+file_to_save = os.path.join("analysis", "election_analysis.txt")
 
 #open the election results and read the file
 ##election_data = open(file_to_load, "r"):
@@ -79,54 +79,41 @@ with open(file_to_load) as election_data:
         #increment candidate vote
         candidate_votes[candidate_name] += 1
 
-    
-#calculate vote percentages
-for candidate_name in candidate_votes: 
-    votes = candidate_votes[candidate_name]
-    vote_percentage = float(votes) / float(total_votes) * 100
+    #Save results to text file
+    with open(file_to_save, "w") as txt_file:
 
-    #print percent outcomes
-    print(f"{candidate_name}: {vote_percentage:.1f}% ({candidate_votes[candidate_name]})\n")
+        election_results = (
+            f"\nElection Results\n"
+            f"--------------------------------\n"
+            f"Total Votes: {total_votes:,}\n"
+            f"--------------------------------\n")
+        print(election_results, end="")
+        txt_file.write(election_results)
 
-    #determine winning candidate
-    if (votes > winning_count) and (vote_percentage > winning_percentage):
-        winning_count = votes 
-        winning_percentage = vote_percentage
-        winning_candidate = candidate_name
+        #calculate vote percentages
+        for candidate_name in candidate_votes: 
+            votes = candidate_votes[candidate_name]
+            vote_percentage = float(votes) / float(total_votes) * 100
 
-winning_candidate_summary = (f"-----------------------------------\n"
-                            f"Winner: {winning_candidate}\n"
-                            f"Winning Vote Count: {winning_count:,}\n"
-                            f"Winning Percentage: {winning_percentage:.1f}%\n"
-                            f"-----------------------------------\n")
+            #print percent outcomes
+            #print(f"{candidate_name}: {vote_percentage:.1f}% ({candidate_votes[candidate_name]})\n")
+            candidate_results = (f"{candidate_name}: {vote_percentage:.1f}% ({candidate_votes[candidate_name]})\n")
 
-print(winning_candidate_summary)
+            #print candidate results and save to the election_analysis.txt file
+            print(candidate_results)
+            txt_file.write(candidate_results)
 
-#print outcomes
-#print(f"{winning_candidate} is the winner!")
+            #determine winning candidate
+            if (votes > winning_count) and (vote_percentage > winning_percentage):
+                winning_count = votes 
+                winning_percentage = vote_percentage
+                winning_candidate = candidate_name
 
-#print total votes
-#print(total_votes)
-
-#print candidate name list
-#print(candidate_votes)
-
-
-#using open() function with "w" mode to write data to the save file
-#using "with" to open the save file as a text file
-#with open(file_to_save, "w") as txt_file:
-
-##outfile = open(file_to_save, "w")
-#    txt_file.write("Counties in the Election\n")
-#    txt_file.write("-------------------------\n")
-#    txt_file.write("Arapahoe\n")
-#    txt_file.write("Denver\n")    
-#    txt_file.write("Jefferson")
-
-#"close" command not needed when "with" is used. 
-##outfile.close()
-
-
-#   To do: perform analysis
-#    print(election_data)
-
+        winning_candidate_summary = (f"-----------------------------------\n"
+                                    f"Winner: {winning_candidate}\n"
+                                    f"Winning Vote Count: {winning_count:,}\n"
+                                    f"Winning Percentage: {winning_percentage:.1f}%\n"
+                                    f"-----------------------------------\n")
+        #print(winning_candidate_summary)
+        txt_file.write(winning_candidate_summary)
+        
