@@ -1,6 +1,3 @@
-# election_analysis
-Python programming practice
-
 # Election Analysis
 
 ## Project Overview
