@@ -96,7 +96,7 @@ with open(file_to_load) as election_data:
             vote_percentage = float(votes) / float(total_votes) * 100
 
             #print percent outcomes
-            #print(f"{candidate_name}: {vote_percentage:.1f}% ({candidate_votes[candidate_name]})\n")
+            print(f"{candidate_name}: {vote_percentage:.1f}% ({candidate_votes[candidate_name]})\n")
             candidate_results = (f"{candidate_name}: {vote_percentage:.1f}% ({candidate_votes[candidate_name]})\n")
 
             #print candidate results and save to the election_analysis.txt file
@@ -114,6 +114,6 @@ with open(file_to_load) as election_data:
                                     f"Winning Vote Count: {winning_count:,}\n"
                                     f"Winning Percentage: {winning_percentage:.1f}%\n"
                                     f"-----------------------------------\n")
-        #print(winning_candidate_summary)
+        print(winning_candidate_summary)
         txt_file.write(winning_candidate_summary)
-        
+
